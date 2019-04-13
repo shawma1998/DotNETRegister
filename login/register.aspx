@@ -9,7 +9,7 @@
 
     <script src="assests\js\jquery-3.3.1.js"></script>
     <script src="assests\js\bootstrap.js"></script>
-    <script src="assests\js\UnserIndexScript\userInfo.js"></script>
+    <script src="assests\js\UnserIndexScript\userRegister.js"></script>
     <link rel="stylesheet" href="assests\css\bootstrap.css">
     <link rel="stylesheet" href="assests\css\style.css">
     <link href="https://cdn.bootcss.com/awesome-bootstrap-checkbox/v0.2.3/awesome-bootstrap-checkbox.css"
@@ -28,9 +28,9 @@
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="index.html">首页</a></li>
+                <li><a href="index.aspx">首页</a></li>
                 <li><a href="">关于</a></li>
-                <li><a href="">早上好，香婊子&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                <li><a href=""> 早上好，香婊子&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                 <li class="icon-white active">
                     <a href="#">
 
@@ -46,30 +46,37 @@
             </ul>
         </div>
     </nav>
+
     <div class="col-md-12 userInfo_btnArea navbar navbar-default ">
-        <button id="btn-modify" class="btn btn-large col-sm-1 pull-right btn-primary btn_info_nav">修改</button>
-        <button id="btn-submit" class="btn btn-large col-sm-1 pull-right btn-success btn_info_nav">提交</button>
+
+        <button id="btn-submit-register" class="btn btn-large col-sm-1 pull-right btn-success btn_info_nav">提交</button>
+
     </div>
+
+
+
     <div id="content" class="container ">
+
         <div id="container_user_modify" class="col-md-6 col-sm-offset-3">
+
             <form class="form-horizontal" role="form">
-                <fieldset id="fieldset" disabled>
+                <fieldset id="fieldset" abled>
                     <div class="form-group ">
                         <label for="name" class="col-sm-2 col-sm-offset-1 labelTag ">账号</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control " id="username" placeholder="请输入账号">
+                            <input type="text" class="form-control " id="UserAccount" placeholder="请输入账号">
                         </div>
                     </div>
                     <div class="form-group ">
                         <label for="name" class="col-sm-2 col-sm-offset-1 labelTag ">名字</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control " id="name" placeholder="请输入名字">
+                            <input type="text" class="form-control " id="UserName" placeholder="请输入名字">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="col-sm-2 col-sm-offset-1  labelTag">密码</label>
                         <div class="col-sm-8">
-                            <input type="password" name="" id="password" class="form-control col-sm-8" required="required"
+                            <input type="password" name="" id="input" class="form-control col-sm-8" required="required"
                                 placeholder="请输入密码" title="">
                         </div>
                     </div>
@@ -86,6 +93,7 @@
                             <input type="date" class="form-control" id="birthday">
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="password" class="col-sm-2 col-sm-offset-1  labelTag">选择性别</label>
                         <div class="col-sm-8">
@@ -103,8 +111,13 @@
                     </div>
                 </fieldset>
             </form>
+
         </div>
+
     </div>
+
+
+
 </body>
 
 </html>
