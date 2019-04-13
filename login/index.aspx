@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -21,13 +21,13 @@
 
             <div class="navbar-header">
                 
-                <a class="navbar-brand" href="index.html">烧卖网</a>
+                <a class="navbar-brand" href="index.aspx">烧卖网</a>
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="index.html">首页</a></li>
+                <li class="active"><a href="index.aspx">首页</a></li>
                 <li><a href="">关于</a></li>
-                <li><a href="login.html">登录</a></li>
+                <li><a href="login.aspx">登录</a></li>
             </ul>
         </div>
     </nav>
