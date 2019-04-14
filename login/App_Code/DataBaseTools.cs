@@ -111,10 +111,48 @@ public static class DataBaseTools
 
             }
         }
-        catch (Exception) {
+        catch (Exception)
+        {
             sqlData.Close();
         }
 
         return result;
+    }
+
+
+    public static Dictionary<String, String> getInfoByAccount(string UserAccount)
+    {
+        SqlConnection sqlConnection = new SqlConnection(connectionString);
+        Dictionary<String, String> infoDictioary = new Dictionary<String, String>();
+        string sqlSelectString;
+        sqlConnection.Open();
+
+        sqlSelectString = "SELECT * FROM [User] WHERE UserAccount = '" + UserAccount + "'";
+
+        SqlCommand sqlCommand = new SqlCommand(sqlSelectString, sqlConnection);
+
+        SqlDataReader dataReader = sqlCommand.ExecuteReader();
+        while (dataReader.Read())
+        {
+            string _userAccount = dataReader.GetString(1);
+            string _userName = dataReader.GetString(2);
+            DateTime _dateTime = dataReader.GetDateTime(3);
+            bool _sex = dataReader.GetBoolean(4);
+            string _password = dataReader.GetString(5);
+
+
+            infoDictioary.Add("UserAccount", _userAccount);
+            infoDictioary.Add("UserName", _userName);
+            infoDictioary.Add("UserBirth", _dateTime.ToString());
+            infoDictioary.Add("UserSex", _sex.ToString());
+            infoDictioary.Add("UserPassWord", _password);
+
+        }
+
+        
+
+        //dataReader.get
+        return infoDictioary;
+
     }
 }

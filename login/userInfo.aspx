@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="userInfo.aspx.cs" Inherits="userInfo" %>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -57,33 +58,33 @@
                     <div class="form-group ">
                         <label for="name" class="col-sm-2 col-sm-offset-1 labelTag ">账号</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control " id="username" placeholder="请输入账号">
+                            <input type="text" class="form-control " id="UserAccount" placeholder="请输入账号" runat="server">
                         </div>
                     </div>
                     <div class="form-group ">
                         <label for="name" class="col-sm-2 col-sm-offset-1 labelTag ">名字</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control " id="name" placeholder="请输入名字">
+                            <input type="text" class="form-control " id="Name" placeholder="请输入名字" runat="server">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="col-sm-2 col-sm-offset-1  labelTag">密码</label>
                         <div class="col-sm-8">
-                            <input type="password" name="" id="password" class="form-control col-sm-8" required="required"
-                                placeholder="请输入密码" title="">
+                            <input type="password" name="" id="Password" class="form-control col-sm-8" required="required"
+                                placeholder="请输入密码" title="" runat="server">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="col-sm-2 col-sm-offset-1  labelTag">确认密码</label>
                         <div class="col-sm-8">
-                            <input type="password" name="" id="input" class="form-control col-sm-8" required="required"
-                                placeholder="确认密码" title="">
+                            <input type="password" name="ConfirmPassWord" id="ConfirmPassWord" class="form-control col-sm-8" required="required"
+                                placeholder="确认密码" title="" runat="server">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name" class="col-sm-2 col-sm-offset-1 labelTag ">生日</label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control" id="birthday">
+                            <input type="date" class="form-control" id="birthday" runat="server" name="birthday" runat="server">
                         </div>
                     </div>
                     <div class="form-group">

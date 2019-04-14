@@ -27,7 +27,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="index.aspx">首页</a></li>
                 <li><a href="">关于</a></li>
-                <li><a href="login.aspx">登录</a></li>
+                <li><a href="loginAccount.aspx">登录</a></li>
             </ul>
         </div>
     </nav>

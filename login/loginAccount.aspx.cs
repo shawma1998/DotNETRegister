@@ -10,7 +10,7 @@ public partial class loginAccount :  System.Web.UI.Page
 {
 
     private int login_result;
-    private string  _userName;
+    private string _userAccount;
     private string  _passWord;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -34,14 +34,21 @@ public partial class loginAccount :  System.Web.UI.Page
     protected void loginUser(object sender, EventArgs e)
     {
 
-        _userName = Request.Form["input_userAccount"];
+        _userAccount = Request.Form["input_userAccount"];
         _passWord = Request.Form["input_password"];
         
-        login_result = DataBaseTools.LoginForUser(_userName, _passWord);
+        login_result = DataBaseTools.LoginForUser(_userAccount, _passWord);
 
         if (login_result == 1)
         {
+
+            Session["UserAccount"] = _userAccount;
             Response.Redirect("userIndex.aspx");
+            return;
+        }
+        else {
+            Response.Write("<script>alert('账号或者密码出错');</script>");
+            return;
         }
     }
 

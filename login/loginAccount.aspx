@@ -28,7 +28,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="index.aspx" runat="server">首页</a></li>
                 <li><a href="#">关于</a></li>
-                <li class="active"><a href="login.aspx" runat="server">登录</a></li>
+                <li class="active"><a href="loginAccount.aspx" runat="server">登录</a></li>
             </ul>
         </div>
     </nav>
@@ -65,14 +65,17 @@
 
                 <div class="">
 
-                    <button type="button" id="btn_login"
-                        class="btn btn-large col-sm-4 col-sm-offset-1 btn-success btn_loginPage" OnServerClick ="loginUser" runat="server">
+                    
+                     <button type="button"
+                        class="btn btn-large col-sm-4 col-sm-offset-1 btn-primary btn_loginPage" OnServerClick="loginUser" runat="server" >
                         登录</button>
-
                     
                     <button type="button"
                         class="btn btn-large col-sm-4 col-sm-offset-2 btn-default btn_loginPage" OnServerClick="registerUser" runat="server" >
                         注册</button>
+                    
+                    
+                  
 
                 </div>
 

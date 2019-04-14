@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="userIndex.aspx.cs" Inherits="userIndex" %>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -29,7 +31,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="index.aspx">首页</a></li>
                 <li><a href="">关于</a></li>
-                <li><a href="">早上好，香婊子&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                <li><a href="">早上好，<span id="userNameNav"><%=UserNameInNav%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 
                 <li class="icon-white">
                     <a href="#">
