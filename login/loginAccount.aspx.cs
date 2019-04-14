@@ -25,20 +25,18 @@ public partial class loginAccount :  System.Web.UI.Page
         */
 
 
-       // Label1.Text = DataBaseTools.Insert("User", list).ToString();
+        // Label1.Text = DataBaseTools.Insert("User", list).ToString();
 
-       
+
     }
 
 
     protected void loginUser(object sender, EventArgs e)
     {
-        Response.Write("Hello World!!!");
 
-        Label1.Text = DataBaseTools.LoginForUser("123456", "1111").ToString();
         _userName = Request.Form["input_userAccount"];
         _passWord = Request.Form["input_password"];
-
+        
         login_result = DataBaseTools.LoginForUser(_userName, _passWord);
 
         if (login_result == 1)
@@ -48,6 +46,6 @@ public partial class loginAccount :  System.Web.UI.Page
     }
 
     protected void registerUser(object sender, EventArgs e) {
-
+        Response.Write("Hello World!!!");
     }
 }

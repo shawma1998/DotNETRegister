@@ -2,7 +2,6 @@
 
 <!DOCTYPE html>
 
-
 <html lang="en">
 
 <head>
@@ -38,7 +37,7 @@
 
         <div id="container_bg" class="col-md-6 col-sm-offset-3">
 
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" runat="server">
                 <div class="form-group">
                     <label for="firstname" class="col-sm-2 col-sm-offset-1 labelTag ">名字</label>
                     <div class="col-sm-8">
@@ -67,11 +66,12 @@
                 <div class="">
 
                     <button type="button" id="btn_login"
-                        class="btn btn-large col-sm-4 col-sm-offset-1 btn-success btn_loginPage" runat="server" onclick="loginUser">
+                        class="btn btn-large col-sm-4 col-sm-offset-1 btn-success btn_loginPage" OnServerClick ="loginUser" runat="server">
                         登录</button>
 
+                    
                     <button type="button"
-                        class="btn btn-large col-sm-4 col-sm-offset-2 btn-default btn_loginPage" runat="server"  onclick="registerUser">
+                        class="btn btn-large col-sm-4 col-sm-offset-2 btn-default btn_loginPage" OnServerClick="registerUser" runat="server" >
                         注册</button>
 
                 </div>
@@ -82,7 +82,7 @@
         </div>
 
     </div>
-    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="Label1" runat="server" Text="Label" Visible="false"></asp:Label>
 
 </body>
 

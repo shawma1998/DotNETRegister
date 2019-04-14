@@ -74,12 +74,34 @@ public static class DataBaseTools
         sqlConnection.Open();
 
         string SearchSql_str = "SELECT * FROM [User] WHERE UserAccount = '" + UserName + "' AND Password = '" + PassWord + "'";
-
         SqlCommand sqlCommand = new SqlCommand(SearchSql_str, sqlConnection);
 
-        int influenceLine = sqlCommand.ExecuteNonQuery();
+        int influenceLine = getResultCount(sqlCommand);
 
         return influenceLine;
 
+    }
+
+
+    public static int getResultCount(SqlCommand sqlCommand) {
+        int result = 0;
+        SqlDataReader sqlData = sqlCommand.ExecuteReader();
+        try
+        {
+            while (sqlData.Read())
+            {
+
+                if (sqlData.HasRows)
+                {
+                    result = result + 1;
+                }
+
+            }
+        }
+        catch (Exception) {
+            sqlData.Close();
+        }
+
+        return result;
     }
 }
