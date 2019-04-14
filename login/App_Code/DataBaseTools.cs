@@ -37,7 +37,7 @@ public static class DataBaseTools
             for (int i = 0;i<list.Count;i++)
             {
 
-
+            string temptest = list[i];
 
             if (i == 4)
             {
@@ -50,21 +50,34 @@ public static class DataBaseTools
             {
                 InsertCommandString.Append("'" + list[i] + "',");
             }
-                
-            }
-            InsertCommandString.Remove(InsertCommandString.Length - 1, 1);
-            InsertCommandString.Append(")");
 
-            sqlCommand = new SqlCommand(InsertCommandString.ToString(),sqlConnection);
+        }
+        InsertCommandString.Remove(InsertCommandString.Length - 1, 1);
+        InsertCommandString.Append(")");
+
+        sqlCommand = new SqlCommand(InsertCommandString.ToString(), sqlConnection);
+
+        try
+        {
 
             int lineCount = sqlCommand.ExecuteNonQuery();
-
-            sqlConnection.Close();
             return lineCount;
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+        finally
+        {
+            sqlConnection.Close();
+        }
 
-        
 
-        
+
+
+
+
+
     }
 
 

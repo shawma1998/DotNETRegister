@@ -46,6 +46,7 @@ public partial class loginAccount :  System.Web.UI.Page
     }
 
     protected void registerUser(object sender, EventArgs e) {
-        Response.Write("Hello World!!!");
+
+        Response.Redirect("register.aspx");
     }
 }
