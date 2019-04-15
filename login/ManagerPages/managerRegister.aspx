@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="register.aspx.cs" Inherits="register" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="managerRegister.aspx.cs" Inherits="ManagerPages_managerRegister" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,15 +9,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <script src="assests\js\jquery-3.3.1.js"></script>
-    <script src="assests\js\bootstrap.js"></script>
-    <script src="assests\js\UnserIndexScript\userRegister.js"></script>
-    <link rel="stylesheet" href="assests\css\bootstrap.css">
-    <link rel="stylesheet" href="assests\css\style.css">
-    <link href="https://cdn.bootcss.com/awesome-bootstrap-checkbox/v0.2.3/awesome-bootstrap-checkbox.css"
-        rel="stylesheet">
-    <link href="https://cdn.bootcss.com/awesome-bootstrap-checkbox/v0.2.3/awesome-bootstrap-checkbox.min.css"
-        rel="stylesheet">
+    <script src="..\assests\js\utils.js"></script>
+    <script src="..\assests\js\tether.js"></script>
+    <script src="..\assests\js\jquery-3.3.1.js"></script>
+    <script src="..\assests\js\bootstrap.js"></script>
+    <script src="..\assests\js\UnserIndexScript\userInfo.js"></script>
+    <link rel="stylesheet" href="..\assests\css\bootstrap.css">
+    <link rel="stylesheet" href="..\assests\css\style.css">
+    <link href="..\assests\css\awsome-checkbox.css" rel="stylesheet" />
+    <script>
+
+    
+
+    </script>
+
 </head>
 
 <body>
@@ -32,11 +36,9 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="index.aspx">首页</a></li>
-                <li><a href="">关于</a></li>
-                <li class="active"><a href="">注册账户</a></li>
-                
-                <li class="icon-white">
-                    <a href="loginAccount.aspx">
+
+                <li class="icon-white" >
+                    <a href="managerLogin.aspx"  onclick="logout">
                         <span class="glyphicon glyphicon-log-out userInfo"></span>
                         &nbsp;&nbsp;
                     </a>
@@ -45,57 +47,74 @@
         </div>
     </nav>
 
-    <div class="col-md-12 userInfo_btnArea navbar navbar-default " runat="server">
 
-        <button type="button" class="btn btn-large col-sm-1 pull-right btn-primary btn_info_nav" runat="server" OnServerClick ="submitAccount">提交</button>
 
+    <div class="container col-md-2   ">
+        <div class="row">
+            <div class="span2">
+                <ul class="nav nav-pills nav-stacked">
+                    <li ><a href="managerUser.aspx">用户管理</a></li>
+                    <li class="active"> <a href="#">用户注册</a></li>
+                    <li><a href="managerUpLoad.aspx">批量注册</a></li>
+                    <li><a href="#">功能真的还没开发</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
+    <div class="container col-md-10">
 
-
-
-    <div id="content" class="container ">
-
-        <div id="container_user_modify" class="col-md-6 col-sm-offset-3">
-
-            <form class="form-horizontal" role="form" runat="server">
-                <fieldset id="fieldset" abled>
-                    <div class="form-group ">
-                        <label for="name" class="col-sm-2 col-sm-offset-1 labelTag ">账号</label>
-                        <div class="col-sm-8">
+        <form id="form1" runat="server">
+            <div>
+                 <fieldset id="fieldset">
+                     
+                     <br />
+                    <div class="form-group " class="col-sm-6">
+                        <label for="name" class="col-sm-2  labelTag ">账号</label>
+                        <div class="col-sm-4">
                             <input type="text" class="form-control " id="UserAccount" placeholder="请输入账号" runat="server" name="userAccount">
                         </div>
                     </div>
+                     <br />
+                     <br />
                     <div class="form-group ">
-                        <label for="name" class="col-sm-2 col-sm-offset-1 labelTag ">名字</label>
-                        <div class="col-sm-8">
+                        <label for="name" class="col-sm-2 labelTag ">名字</label>
+                        <div class="col-sm-4">
                             <input type="text" class="form-control " id="UserName" placeholder="请输入名字" runat="server" name="username">
                         </div>
                     </div>
+                     <br />
+                     <br />
                     <div class="form-group">
-                        <label for="password" class="col-sm-2 col-sm-offset-1  labelTag">密码</label>
-                        <div class="col-sm-8">
+                        <label for="password" class="col-sm-2  labelTag">密码</label>
+                        <div class="col-sm-4">
                             <input type="password" name="password" id="password" class="form-control col-sm-8" required="required"
                                 placeholder="请输入密码" title="" runat="server">
                         </div>
                     </div>
+                     <br />
+                     <br />
                     <div class="form-group">
-                        <label for="password" class="col-sm-2 col-sm-offset-1  labelTag">确认密码</label>
-                        <div class="col-sm-8">
+                        <label for="password" class="col-sm-2  labelTag">确认密码</label>
+                        <div class="col-sm-4">
                             <input type="password" name="comfirnPassword" id="comfirnPassword" class="form-control col-sm-8" required="required"
                                 placeholder="确认密码" title="" runat="server">
                         </div>
                     </div>
+                     <br />
+                     <br />
                     <div class="form-group">
-                        <label for="name" class="col-sm-2 col-sm-offset-1 labelTag ">生日</label>
-                        <div class="col-sm-8">
+                        <label for="name" class="col-sm-2  labelTag ">生日</label>
+                        <div class="col-sm-4">
 
                             <input type="Date" class="form-control" id="birthday" name="birthdatDate" required="required" runat="server">
                         </div>
                     </div>
-
+                     
+                     <br />
+                     <br />
                     <div class="form-group">
-                        <label for="password" class="col-sm-2 col-sm-offset-1  labelTag">选择性别</label>
-                        <div class="col-sm-8">
+                        <label for="password" class="col-sm-2 labelTag">选择性别</label>
+                        <div class="col-sm-4">
                             <div class="radio radio-inline radio-primary">
                                 <input class="radio-primary" type="radio" name="sexual" id="inlineRadio1"
                                     value="1" checked runat="server">
@@ -108,12 +127,21 @@
                             </div>
                         </div>
                     </div>
+                     
+                     <br />
+                     <br />
+                     <br />
+                     <input type="button" id="btn_submit" class="btn btn-primary btn-lg col-sm-5 col-sm-offset-1"  OnServerClick ="submitManaAccount"  value="注册" runat="server"/>
                 </fieldset>
-            </form>
+               
+            </div>
 
-        </div>
+        </form>
 
     </div>
+
+
+
 
 
 

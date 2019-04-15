@@ -14,7 +14,7 @@ public static class DataBaseTools
 {
 
     //后期需要写入连接字符串
-    private static readonly string connectionString = "Data Source=DESKTOP-KR8A64M;Initial Catalog=ShowmarkNET;User ID=sa;Password=123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+    public static readonly string connectionString = "Data Source=DESKTOP-KR8A64M;Initial Catalog=ShowmarkNET;User ID=sa;Password=123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
    
 
@@ -82,11 +82,25 @@ public static class DataBaseTools
 
 
 
-    public static int LoginForUser(string UserName, string PassWord) {
+    public static int LoginForUser(string UserAccount, string PassWord) {
         SqlConnection sqlConnection = new SqlConnection(connectionString);
         sqlConnection.Open();
 
-        string SearchSql_str = "SELECT * FROM [User] WHERE UserAccount = '" + UserName + "' AND Password = '" + PassWord + "'";
+        string SearchSql_str = "SELECT * FROM [User] WHERE UserAccount = '" + UserAccount + "' AND Password = '" + PassWord + "'";
+        SqlCommand sqlCommand = new SqlCommand(SearchSql_str, sqlConnection);
+
+        int influenceLine = getResultCount(sqlCommand);
+
+        return influenceLine;
+
+    }
+
+    public static int LoginForManager(string UserAccount, string PassWord)
+    {
+        SqlConnection sqlConnection = new SqlConnection(connectionString);
+        sqlConnection.Open();
+
+        string SearchSql_str = "SELECT * FROM [ManagerUser] WHERE UserAccount = '" + UserAccount + "' AND Password = '" + PassWord + "'";
         SqlCommand sqlCommand = new SqlCommand(SearchSql_str, sqlConnection);
 
         int influenceLine = getResultCount(sqlCommand);
@@ -153,6 +167,24 @@ public static class DataBaseTools
 
         //dataReader.get
         return infoDictioary;
+
+    }
+
+    public static void SubmitData(Dictionary<String, String> userInfo)
+    {
+        string tempsex;
+
+        
+        SqlConnection sqlConnection = new SqlConnection(connectionString);
+        sqlConnection.Open();
+
+        string UpdateStr = "UPDATE [User] SET Name = '" + userInfo["UserName"] + "',Birthday = '" + userInfo["UserBirth"] + "', Sex = '" + userInfo["UserSex"] + "',  " +
+            "PassWord = '" + userInfo["UserPassWord"] + "' WHERE UserAccount = '" +userInfo["UserAccount"]+"'";
+
+        SqlCommand sqlCommand = new SqlCommand(UpdateStr, sqlConnection);
+
+        sqlCommand.ExecuteNonQuery();
+
 
     }
 }

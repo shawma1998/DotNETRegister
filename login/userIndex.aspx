@@ -34,7 +34,7 @@
                 <li><a href="">早上好，<span id="userNameNav"><%=UserNameInNav%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
 
                 <li class="icon-white">
-                    <a href="#">
+                    <a href="userInfo.aspx">
 
                         <span class="glyphicon glyphicon-user userInfo"></span>
                     </a>
@@ -59,7 +59,7 @@
                     <li><a href="#">功能真的还没开发</a></li>
                     <li><a href="#">功能真的还没开发</a></li>
                     <li><a href="#">功能真的还没开发</a></li>
-                    <li><a href="#">个人信息</a></li>
+                    <li><a href="userInfo.aspx">个人信息</a></li>
                 </ul>
             </div>
         </div>

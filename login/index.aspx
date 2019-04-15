@@ -32,7 +32,12 @@
         </div>
     </nav>
 
-  
+  <div class="container col-sm-12" style="background-image: url(assests/image/shawmaIndex.png);height:864px;background-size: 100% auto;overflow:hidden;">
+
+      <div class="col-sm-12"></div>
+      
+
+  </div>
 
 
 </body>

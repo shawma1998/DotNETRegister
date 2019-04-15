@@ -56,4 +56,10 @@ public partial class loginAccount :  System.Web.UI.Page
 
         Response.Redirect("register.aspx");
     }
+    protected void GoForManaUser(object sender, EventArgs e) {
+
+        Response.Redirect("ManagerPages/managerLogin.aspx");
+    }
+
+    
 }
