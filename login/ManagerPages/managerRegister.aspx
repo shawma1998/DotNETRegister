@@ -31,11 +31,11 @@
 
             <div class="navbar-header">
 
-                <a class="navbar-brand left" href="index.aspx">烧卖网</a>
+                <a class="navbar-brand left" href="../index.aspx">烧卖网</a>
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="index.aspx">首页</a></li>
+                <li><a href="../index.aspx">首页</a></li>
 
                 <li class="icon-white" >
                     <a href="managerLogin.aspx"  onclick="logout">

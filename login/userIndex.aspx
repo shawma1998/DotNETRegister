@@ -40,7 +40,7 @@
                     </a>
                 </li>
                 <li class="icon-white">
-                    <a href="#">
+                    <a href="loginAccount.aspx">
                         <span class="glyphicon glyphicon-log-out userInfo"></span>
                         &nbsp;&nbsp;
                     </a>

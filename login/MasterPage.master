@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="managerUpLoad.aspx.cs" Inherits="ManagerPages_managerUpLoad" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,10 +16,10 @@
     <script src="..\assests\js\UnserIndexScript\userInfo.js"></script>
     <link rel="stylesheet" href="..\assests\css\bootstrap.css">
     <link rel="stylesheet" href="..\assests\css\style.css">
-    <link href="..\assests\css\awsome-checkbox.css" rel="stylesheet" />
+
     <script>
 
-        alert("此功能还未完善！！！！！！！！！！！！！！！！！！！！");
+    
 
     </script>
 
@@ -31,11 +31,11 @@
 
             <div class="navbar-header">
 
-                <a class="navbar-brand left" href="../index.aspx">烧卖网</a>
+                <a class="navbar-brand left" href="index.aspx">烧卖网</a>
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="../index.aspx">首页</a></li>
+                <li><a href="index.aspx">首页</a></li>
 
                 <li class="icon-white" >
                     <a href="managerLogin.aspx"  onclick="logout">
@@ -53,10 +53,12 @@
         <div class="row">
             <div class="span2">
                 <ul class="nav nav-pills nav-stacked">
-                    <li ><a href="managerUser.aspx">用户管理</a></li>
-                    <li> <a href="managerRegister.aspx">用户注册</a></li>
-                    <li class="active"><a href="#">批量注册</a></li>
-                    <li><a href="#">功能真的还没开发</a></li>
+                    <li class="active"><a href="managerUser.aspx">用户管理</a></li>
+                    <li><a href="managerRegister.aspx">用户注册</a></li>
+                    <li><a href="managerUpLoad.aspx">批量注册</a></li>
+                    <li><a href="#">分类管理</a></li>
+                    <li><a href="#">添加文章</a></li>
+                    <li><a href="#">文章管理</a></li>
                 </ul>
             </div>
         </div>
@@ -64,19 +66,8 @@
     <div class="container col-md-10">
 
         <form id="form1" runat="server">
-            <div>
-                <br />
-                <br />
-                <br />
-                <br />
-                <asp:FileUpload ID="fileSelect" CssClass="col-sm-5 " runat="server" Height="33px" Width="380px" />
-                <br />
-                <br />
-                <br />
-                <br />
-                <button type="button" class="btn btn-large col-sm-1 pull-left btn-primary" runat="server" onserverclick="submitExcel">上传</button>
-                
-            </div>
+            
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
 
         </form>
 

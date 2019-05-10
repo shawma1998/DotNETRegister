@@ -21,11 +21,11 @@
 
             <div class="navbar-header" runat="server">
 
-                <a class="navbar-brand left" href="index.html" runat="server">烧卖网管理员后台系统</a>
+                <a class="navbar-brand left" href="../index.aspx" runat="server">烧卖网管理员后台系统</a>
             </div>
 
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="index.aspx" runat="server">登录</a></li>
+                <li class="active"><a href="../index.aspx" runat="server">登录</a></li>
             </ul>
         </div>
     </nav>

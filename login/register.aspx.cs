@@ -38,6 +38,8 @@ public partial class register : System.Web.UI.Page
             int lifluCount = DataBaseTools.Insert("User", UserInfo);
             if (lifluCount == 1) {
                 Session["UserAccount"] = _account;
+
+                Response.Write("<script>alert('注册成功')</script>");
                 Response.Redirect("userIndex.aspx");
             }
             if (lifluCount == -1) {
