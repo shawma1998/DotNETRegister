@@ -91,6 +91,7 @@ public static class DataBaseTools
 
         int influenceLine = getResultCount(sqlCommand);
 
+        sqlConnection.Close();
         return influenceLine;
 
     }
@@ -105,6 +106,7 @@ public static class DataBaseTools
 
         int influenceLine = getResultCount(sqlCommand);
 
+        sqlConnection.Close();
         return influenceLine;
 
     }
@@ -129,7 +131,7 @@ public static class DataBaseTools
         {
             sqlData.Close();
         }
-
+        
         return result;
     }
 
@@ -163,8 +165,9 @@ public static class DataBaseTools
 
         }
 
-        
 
+
+        sqlConnection.Close();
         //dataReader.get
         return infoDictioary;
 
@@ -185,6 +188,18 @@ public static class DataBaseTools
 
         sqlCommand.ExecuteNonQuery();
 
+        sqlConnection.Close();
+
+    }
+
+
+    public static void AddTitle(string titleName, string pid) {
+        SqlConnection sqlConnection = new SqlConnection(connectionString);
+        sqlConnection.Open();
+        string InsertCommandString = "INSERT INTO MenuList VALUES ("+pid+" , '"+ titleName + "')";
+        SqlCommand sqlCommand = new SqlCommand(InsertCommandString.ToString(),sqlConnection);
+        int lineCount = sqlCommand.ExecuteNonQuery();
+        sqlConnection.Close();
 
     }
 }

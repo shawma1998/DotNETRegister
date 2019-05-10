@@ -48,6 +48,7 @@ public partial class ManagerPages_managerUpLoad : System.Web.UI.Page
          * 6.
          * **/
 
+        /*
         HttpPostedFile file = this.fileSelect.PostedFile;
         string fileName = file.FileName; //文件名
         string tempPath = System.IO.Path.GetTempPath(); //获取系统临时文件路径
@@ -55,7 +56,7 @@ public partial class ManagerPages_managerUpLoad : System.Web.UI.Page
         this.currFileExtension = System.IO.Path.GetExtension(fileName); //获取文件的扩展名
         this.currFilePath = tempPath + fileName; //获取上传后的文件路径 记录到前面声明的全局变量
         file.SaveAs(this.currFilePath); //上传
-
+        */
 
     }
 
