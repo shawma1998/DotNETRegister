@@ -16,7 +16,7 @@ public static class DataBaseTools
     //后期需要写入连接字符串
     public static readonly string connectionString = "Data Source=DESKTOP-KR8A64M;Initial Catalog=ShowmarkNET;User ID=sa;Password=123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-   
+
 
 
     /*
@@ -33,9 +33,9 @@ public static class DataBaseTools
         sqlConnection.Open();
         StringBuilder InsertCommandString = new StringBuilder("INSERT INTO [" + tableName + "] VALUES (");
         SqlCommand sqlCommand;
-            //1.根据键来拿值
-            for (int i = 0;i<list.Count;i++)
-            {
+        //1.根据键来拿值
+        for (int i = 0; i < list.Count; i++)
+        {
 
             string temptest = list[i];
 
@@ -131,7 +131,7 @@ public static class DataBaseTools
         {
             sqlData.Close();
         }
-        
+
         return result;
     }
 
@@ -177,12 +177,12 @@ public static class DataBaseTools
     {
         string tempsex;
 
-        
+
         SqlConnection sqlConnection = new SqlConnection(connectionString);
         sqlConnection.Open();
 
         string UpdateStr = "UPDATE [User] SET Name = '" + userInfo["UserName"] + "',Birthday = '" + userInfo["UserBirth"] + "', Sex = '" + userInfo["UserSex"] + "',  " +
-            "PassWord = '" + userInfo["UserPassWord"] + "' WHERE UserAccount = '" +userInfo["UserAccount"]+"'";
+            "PassWord = '" + userInfo["UserPassWord"] + "' WHERE UserAccount = '" + userInfo["UserAccount"] + "'";
 
         SqlCommand sqlCommand = new SqlCommand(UpdateStr, sqlConnection);
 
@@ -193,13 +193,41 @@ public static class DataBaseTools
     }
 
 
-    public static void AddTitle(string titleName, string pid) {
+    public static int AddTitle(string titleName, string pid) {
         SqlConnection sqlConnection = new SqlConnection(connectionString);
         sqlConnection.Open();
-        string InsertCommandString = "INSERT INTO MenuList VALUES ("+pid+" , '"+ titleName + "')";
-        SqlCommand sqlCommand = new SqlCommand(InsertCommandString.ToString(),sqlConnection);
+        string InsertCommandString = "INSERT INTO MenuList VALUES (" + pid + " , '" + titleName + "' , 1)";
+        SqlCommand sqlCommand = new SqlCommand(InsertCommandString.ToString(), sqlConnection);
         int lineCount = sqlCommand.ExecuteNonQuery();
         sqlConnection.Close();
+        return lineCount;
+    }
 
+    public static int DeleteTitle(string id)
+    {
+        SqlConnection sqlConnection = new SqlConnection(connectionString);
+        sqlConnection.Open();
+        string InsertCommandString = "UPDATE MenuList SET visable = 0 WHERE id = '" + id + "' ";
+        SqlCommand sqlCommand = new SqlCommand(InsertCommandString.ToString(), sqlConnection);
+        int lineCount = sqlCommand.ExecuteNonQuery();
+        sqlConnection.Close();
+        return lineCount;
+    }
+
+    public static bool IsSubMenu (string id){
+        SqlConnection sqlConnection = new SqlConnection(connectionString);
+        sqlConnection.Open();
+        string InsertCommandString = "SELECT * FROM MenuList WHERE pid = '"+id+"'";
+        SqlCommand sqlCommand = new SqlCommand(InsertCommandString.ToString(), sqlConnection);
+        SqlDataReader nwReader = sqlCommand.ExecuteReader();
+        while (nwReader.Read())
+        {
+            sqlConnection.Close();
+            return false;
+
+        }
+
+        sqlConnection.Close();
+        return true;
     }
 }
