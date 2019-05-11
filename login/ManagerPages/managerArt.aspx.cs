@@ -17,22 +17,23 @@ public partial class ManagerPages_managerArt : System.Web.UI.Page
     private static string mid;
     private static string index;
     private static int pageIndex;
+    private const int MaxInShow = 5;
     protected void Page_Load(object sender, EventArgs e)
     {
 
         mid = Request.QueryString["mid"];
-        index = Request.QueryString["index"];
         
+            ShowAtriaclList(mid, index);
+        ListMenu();
         if (!IsPostBack)
         {
-            ShowAtriaclList(mid, index);
-            ListMenu();
+            
         }
     }
 
 
     [WebMethod]
-    public static void ShowAtriaclList(string mid, string index)
+    public static string ShowAtriaclList(string mid, string index)
     {
         _artialList = "";
         if (index == null) {
@@ -51,9 +52,10 @@ public partial class ManagerPages_managerArt : System.Web.UI.Page
         {
             con.Open();
             //select* from student limit 2,8;
-            int offset = (int.Parse(index)-1) * 5;
+            int offset = (int.Parse(index)-1) * MaxInShow;
 
-            string Sql = "SELECT * FROM artical  WHERE visable = 1 AND MID = "+mid+" ORDER BY id OFFSET "+ offset + " ROWS;";
+            //SELECT * FROM artical  WHERE visable = 1 AND MID = 1 ORDER BY id OFFSET 3 ROWS FETCH NEXT 1 ROWS ONLY
+            string Sql = "SELECT * FROM artical WHERE visable = 1 AND MID = "+mid+" ORDER BY id OFFSET "+offset+" ROWS FETCH NEXT "+ MaxInShow + " ROWS ONLY";
             SqlCommand Com = new SqlCommand(Sql, con);
             SqlDataAdapter Adaper = new SqlDataAdapter(Com);
             Adaper.Fill(_list);
@@ -62,20 +64,28 @@ public partial class ManagerPages_managerArt : System.Web.UI.Page
             con.Close();
         }
         sb.Append("<ul class=\"list-group\">\r\n");
+
+        if (_list.Rows.Count == 0) {
+            return "END"+index;
+        }
+
         foreach (DataRow dr in _list.Rows)
         {
             string _id = dr["id"].ToString();
             string _title = dr["title"].ToString();
             sb.AppendFormat(
                 "<li class=\"list-group-item\" ID=\"{0}\">" +
-                "<a href=managerArt.aspx?id={0}>{1}</a>" +
+                "{1}" +
+                "<button class = \"btn btn-success\" onclick = \"Preview({0}) \">预览</button>" +
+                "<button class = \"btn btn-primary\" onclick = \"Modify({0}) \">修改</button>" +
+                "<button class = \"btn btn-danger\" onclick = \"Delete({0}) \">删除</button>" +
                 "\r\n", _id, _title);//href可以写需要的链接地址
             sb.Append("</li>\r\n");
         }
         sb.Append("</ul>\r\n");
         _artialList = sb.ToString();
 
-
+        return _artialList;
     }
 
     public void ListMenu()

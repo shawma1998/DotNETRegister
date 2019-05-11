@@ -9,24 +9,44 @@
         li{
             margin-top:10px;
         }
+        #art_list ul li {
+            padding : 30px;
+            margin-bottom:20px;
+            
+        }
+        #art_list ul li button {
+            display: inline-block;
+            vertical-align:central;
+            float:right;
+            margin-top:-5px;
+            margin-left:20px;
+
+        }
 
     </style>
 
-    <input type="text" id="indexText"/>
-    <input type="text" id="midText" runat="server" />
+    <input type="text" hidden id="indexText"/>
+    <input type="text" hidden id="midText" runat="server" />
     <div id="div1" class="col-sm-3">
         <%= _menu %>
     </div>
     <div id="div2" class="col-sm-9">
+        <div id="art_list">
+
+            
         <%= _artialList %>
+
+        </div>
 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item">
-                    <a class="page-link" href="#" tabindex="-1" onclick="pervious()">Previous</a>
+                    
+                    <button type="button" class="btn btn-secondary "  runat="server" onclick="pervious()" >上一页</button>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="#" onclick="Next()">Next</a>
+                    <button type="button" class="btn btn-primary" runat="server" onclick="Next()" >下一页</button>
+                   
                 </li>
             </ul>
         </nav>
@@ -51,7 +71,7 @@
 
         function SaveMid(_mid) {
             mid = _mid;
-            alert(mid);
+            console.log(mid);
         }
 
         function ReflashList() {
@@ -66,13 +86,16 @@
                 success: function (data) {
                     //返回的数据用data.d获取内容   
                     console.log(data.d);
-                    if (data.d != 0) {
-                        alert("新增节点成功");
-                        location.reload();
+                    if (data.d.indexOf("END") == -1) {
+                        console.log(data.d);
+                        $("#art_list").html(data.d);
                     } else {
-                        alert("插入失败");
-                        location.reload();
+                        //alert("mowei ");
+                        //alert(data.d.substring(3));
+                        index = data.d.substring(3)-1;
+                        //location.reload();
                     }
+                    
                 },
                 error: function (err) {
                     alert(err);
@@ -82,6 +105,16 @@
             
         }
 
+
+        function Preview(aid) {
+            alert(aid);
+        }
+        function Delete(aid) {
+            alert(aid);
+        }
+        function Modify(aid) {
+            alert(aid);
+        }
     </script>
 </asp:Content>
 
