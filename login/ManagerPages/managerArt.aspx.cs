@@ -15,6 +15,7 @@ public partial class ManagerPages_managerArt : System.Web.UI.Page
 {
     protected static string _menu = string.Empty;
     protected static string _artialList = string.Empty;
+    protected static string _menuSlect = string.Empty;
     private static string mid;
     private static string index;
     private static int pageIndex;
@@ -24,13 +25,13 @@ public partial class ManagerPages_managerArt : System.Web.UI.Page
 
         mid = Request.QueryString["mid"];
         index = Request.QueryString["index"];
-        
+
         
         ListMenu();
         if (!IsPostBack)
         {
             ShowAtriaclList(mid, index);
-
+            
         }
     }
 
@@ -58,7 +59,7 @@ public partial class ManagerPages_managerArt : System.Web.UI.Page
             int offset = (int.Parse(index)-1) * MaxInShow;
 
             //SELECT * FROM artical  WHERE visable = 1 AND MID = 1 ORDER BY id OFFSET 3 ROWS FETCH NEXT 1 ROWS ONLY
-            string Sql = "SELECT * FROM artical WHERE visable = 1 AND MID = "+mid+" ORDER BY id OFFSET "+offset+" ROWS FETCH NEXT "+ MaxInShow + " ROWS ONLY";
+            string Sql = "SELECT * FROM artical WHERE visable = 1 AND MID = "+mid+" ORDER BY id desc OFFSET "+offset+" ROWS FETCH NEXT "+ MaxInShow + " ROWS ONLY";
             SqlCommand Com = new SqlCommand(Sql, con);
             SqlDataAdapter Adaper = new SqlDataAdapter(Com);
             Adaper.Fill(_list);
@@ -106,6 +107,42 @@ public partial class ManagerPages_managerArt : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string ShowMenuList() {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("<select id=\"mselect\" class=\"form-control\" >");
+        sb.Append("\r\n");
+
+        DataTable _list = new DataTable();
+        string ConctionStr = ConfigurationManager.ConnectionStrings["ShowmarkNETConnectionString"].ToString();
+        using (SqlConnection con = new SqlConnection(ConctionStr))
+        {
+            con.Open();
+            //select* from student limit 2,8;
+
+            //SELECT * FROM artical  WHERE visable = 1 AND MID = 1 ORDER BY id OFFSET 3 ROWS FETCH NEXT 1 ROWS ONLY
+            string Sql = "SELECT id,title FROM MenuList WHERE visable =1 ";
+            SqlCommand Com = new SqlCommand(Sql, con);
+            SqlDataAdapter Adaper = new SqlDataAdapter(Com);
+            Adaper.Fill(_list);
+            Adaper.Dispose();
+            Com.Dispose();
+            con.Close();
+        }
+
+        foreach (DataRow dr in _list.Rows)
+        {
+            string id = dr["id"].ToString();
+            string title = dr["title"].ToString();
+            sb.AppendFormat("<option value=\"{0}\">{1}</option>" ,id, title);
+            sb.Append("\r\n");
+        }
+        sb.Append("</select>");
+        sb.Append("\r\n");
+        //< option > dasdasd </ option ></ select >
+        return sb.ToString();
+    }
+
+    [WebMethod]
     public static int DeleteArt(string _id) {
         int id = int.Parse(_id);
 
@@ -123,6 +160,25 @@ public partial class ManagerPages_managerArt : System.Web.UI.Page
             Com.Dispose();
             con.Close();
             return result;
+        }
+    }
+
+    [WebMethod]
+    public static string AppendArt(string mid, string title, string content, string date, string publisher) {
+        string ConctionStr = ConfigurationManager.ConnectionStrings["ShowmarkNETConnectionString"].ToString();
+        using (SqlConnection con = new SqlConnection(ConctionStr))
+        {
+            con.Open();
+            //select* from student limit 2,8;
+
+            //UPDATE artical SET Address = 'Zhongshan 23', City = 'Nanjing' WHERE LastName = 'Wilson'
+            string sql = "INSERT INTO artical VALUES ('"+title+"',1,"+mid+",'"+ content + "','"+date+"','"+publisher+"')";
+            SqlCommand Com = new SqlCommand(sql, con);
+            int result = Com.ExecuteNonQuery();
+
+            Com.Dispose();
+            con.Close();
+            return mid;
         }
     }
 

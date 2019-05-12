@@ -44,16 +44,12 @@
         </div>
 
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    
-                    <button type="button" class="btn btn-secondary "  runat="server" onclick="pervious()" >上一页</button>
-                </li>
-                <li class="page-item">
-                    <button type="button" class="btn btn-primary" runat="server" onclick="Next()" >下一页</button>
-                   
-                </li>
-            </ul>
+
+            <button type="button" class="btn btn-secondary " runat="server" onclick="pervious()">上一页</button>
+
+            <button type="button" class="btn btn-primary" runat="server" onclick="Next()">下一页</button>
+
+            <button type="button" class="btn btn-primary pull-right col-lg-3" runat="server" data-toggle="modal" data-target="#appendModal" onclick="AppendArt()">添加文章</button>
         </nav>
     </div>
 
@@ -141,12 +137,66 @@
                     <input class="form-control" type="text" id="ed_content" value="标题" />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-submit" onclick="Submit()">提交</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="Submit()">提交</button>
                 </div>
             </div>
         </div>
     </div>
+     <!--
+        新建模态框
+        -->
+    <div class="modal fade" id="appendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">添加文章</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="appendModel" class="modal-body">
+                    
+                    <br />
+                    <span class="badge badge-primary">文章标题</span><br />
+                    <br />
+                    <input class="form-control" type="text" id="add_title" placeholder="输入标题" />
+
+                    <br />
+                    <span class="badge badge-primary">日期</span><br />
+                    <br />
+                    <input class="form-control" type="text" id="add_date" placeholder="标题" />
+
+                    <br />
+                    <span class="badge badge-primary">发布地址</span><br />
+                    <br />
+
+                    <div id="menuselect">
+                    </div>
+                        
+                    <br />
+                    <span class="badge badge-primary">发布者</span><br />
+                    <br />
+                    <input class="form-control" type="text" id="add_publisher" placeholder="输入发布者" />
+
+                    <br />
+                    <span class="badge badge-primary">内容</span><br />
+                    <br />
+                    <input class="form-control" type="text" id="add_content" placeholder="输入内容" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="AppendSubmit()">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div>
+        <asp:TextBox id="TextBox1" name="content" TextMode="MultiLine" runat="server"></asp:TextBox>
+    </div>
+    
 
     <script>
         //获得当前页面的index和mid的值
@@ -192,21 +242,90 @@
             mid = getParam('mid')
         }
 
+        function AppendSubmit() {
+            
+            var title = $("#add_title").val();
+            var content =$("#add_content").val();
+            var date =$("#add_date").val();
+            var publisher = $("#add_publisher").val();
+            var menuid = $("#mselect").val();
+            alert(menuid);
 
 
+            $.ajax({
+                type: "Post",
+                url: "managerArt.aspx/AppendArt",
+                //方法传参的写法一定要对，str为形参的名字,str2为第二个形参的名字   
+                data: "{'mid':'" + menuid + "','title':'" + title + "','content':'" + content + "','date':'" + date + "','publisher':'" + publisher + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    //返回的数据用data.d获取内容   
+                    //alert(data.d)
+                    //alert("OK");
+                    //alert(artobject["title"])
+                    if (data.d != 0) {
+                        //alert("更新成功");
+                        $('#appendModal').modal('toggle')
+                        window.location.replace('managerArt.aspx?index=' + 1 + '&mid=' + data.d);
+                    }
+
+
+                },
+                error: function (err) {
+
+                }
+            });
+
+
+
+        }
+
+
+        function AppendArt() {
+            $("#add_date").val(GetDate())
+             $.ajax({
+                type: "Post",
+                url: "managerArt.aspx/ShowMenuList",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                 success: function (data) {
+                     alert("dd")
+                     $("#menuselect").html(data.d)
+                },
+                error: function (err) {
+                    
+                }
+            });
+            
+        }
+
+        function GetDate() {
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+            return year + "-" + month + "-" + day;
+        }
 
         function Submit() {
 
             var title = $("#ed_title").val();
-            var content =$("#ed_content").val();
-            var date =$("#ed_date").val();
-            var publisher =$("#ed_publisher").val();
+            var content = $("#ed_content").val();
+            var date = $("#ed_date").val();
+            var publisher = $("#ed_publisher").val();
 
             $.ajax({
                 type: "Post",
                 url: "managerArt.aspx/ModifyArtical",
                 //方法传参的写法一定要对，str为形参的名字,str2为第二个形参的名字   
-                data: "{'id':'"+currentId+"','title':'" + title + "','content':'"+content+"','date':'"+date+"','publisher':'"+publisher+"'}",
+                data: "{'id':'" + currentId + "','title':'" + title + "','content':'" + content + "','date':'" + date + "','publisher':'" + publisher + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -223,14 +342,14 @@
 
                 },
                 error: function (err) {
-                    
+
                 }
             });
 
 
         }
 
-     
+
 
 
 
@@ -337,7 +456,7 @@
 
                     //alert(artobject["title"])
                     $("#title").text(artobject["title"]);
-                    $("#content").text(artobject["articalcontent"]);
+                    $("#content").html(artobject["articalcontent"]);
                     $("#date").text(artobject["date"]);
                     $("#publisher").text(artobject["publisher"]);
 
@@ -356,7 +475,7 @@
 
         }
         function Modify(aid) {
-            
+
             currentId = aid;
             /*
              * 弹出模态框
@@ -386,12 +505,64 @@
 
                 },
                 error: function (err) {
-                    
+
                 }
             });
 
 
         }
+
+    </script>
+
+
+
+    
+    <script src="../assests/kindeditor/lang/zh-CN.js"></script>
+    <script src="../assests/kindeditor/kindeditor-all.js"></script>
+    <script src="../assests/kindeditor/plugins/code/prettify.js"></script>
+    <script type="text/javascript">
+        KindEditor.ready(function (K) {
+            var editor = K.create('#content', {
+                //上传管理
+                uploadJson: 'kindeditor/asp.net/upload_json.ashx',
+                //文件管理
+                fileManagerJson: 'kindeditor/asp.net/file_manager_json.ashx',
+
+                allowFileManager: true,
+                //设置编辑器创建后执行的回调函数
+                afterCreate: function () {
+                    var self = this;
+                    K.ctrl(document, 13, function () {
+                        self.sync();
+                        K('form[name=example]')[0].submit();
+                    });
+                    K.ctrl(self.edit.doc, 13, function () {
+                        self.sync();
+                        K('form[name=example]')[0].submit();
+                    });
+                },
+                //上传文件后执行的回调函数,获取上传图片的路径
+                afterUpload: function (url) {
+                    alert(url);
+                },
+                //编辑器高度
+                width: '700px',
+                //编辑器宽度
+                height: '450px;',
+                //配置编辑器的工具栏
+                items: [
+                    'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+                    'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                    'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                    'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+                    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
+                    'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+                    'anchor', 'link', 'unlink', '|', 'about'
+                ]
+            });
+            prettyPrint();
+        });
     </script>
 </asp:Content>
 

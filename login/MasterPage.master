@@ -8,21 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
+    
+    
     <script src="..\assests\js\utils.js"></script>
     <script src="..\assests\js\tether.js"></script>
     <script src="..\assests\js\jquery-3.3.1.js"></script>
+    <script src="assests\js\bootstrap-select.js"></script>
     <script src="..\assests\js\bootstrap.js"></script>
     <script src="..\assests\js\UnserIndexScript\userInfo.js"></script>
     <link rel="stylesheet" href="..\assests\css\bootstrap.css">
+    <link href="assests/kindeditor/plugins/code/prettify.css" rel="stylesheet" />
     <link rel="stylesheet" href="..\assests\css\style.css">
-
-    <script>
-
-    
-
-    </script>
-
 </head>
 
 <body>
