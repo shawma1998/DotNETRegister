@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="managerMenuManager.aspx.cs" Inherits="ManagerPages_managerAddArtical" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="../MaterPage/MasterPage.master" AutoEventWireup="true" CodeFile="managerMenuManager.aspx.cs" Inherits="ManagerPages_managerAddArtical" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">

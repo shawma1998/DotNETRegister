@@ -53,12 +53,11 @@
         <div class="row">
             <div class="span2">
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="managerUser.aspx">用户管理</a></li>
+                    <li><a href="managerUser.aspx">用户管理</a></li>
                     <li><a href="managerRegister.aspx">用户注册</a></li>
                     <li><a href="managerUpLoad.aspx">批量注册</a></li>
-                    <li><a href="#">分类管理</a></li>
-                    <li><a href="#">添加文章</a></li>
-                    <li><a href="#">文章管理</a></li>
+                    <li><a href="managerMenuManager.aspx">分类管理</a></li>
+                    <li><a href="managerArt.aspx">文章管理</a></li>
                 </ul>
             </div>
         </div>

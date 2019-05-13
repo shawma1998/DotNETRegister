@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="managerArt.aspx.cs" Inherits="ManagerPages_managerArt" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="../MaterPage/MasterPage.master" AutoEventWireup="true" CodeFile="managerArt.aspx.cs" Inherits="ManagerPages_managerArt" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
@@ -30,7 +30,7 @@
 
     </style>
 
-    <input type="text" hidden id="indexText"/>
+    <input type="text" hidden id="indexText" />
     <input type="text" hidden id="midText" runat="server" />
     <div id="div1" class="col-sm-3">
         <%= _menu %>
@@ -38,9 +38,8 @@
     <div id="div2" class="col-sm-9">
         <div id="art_list">
 
-            
-        <%= _artialList %>
 
+            <%= _artialList %>
         </div>
 
         <nav aria-label="Page navigation example">
@@ -98,7 +97,7 @@
                     <span class="badge badge-primary">发布者</span>
                     <h4 id="publisher">fasddsfsdfsdf</h4>
                     <hr />
-                    
+
                     <span class="badge badge-primary">发布日期</span>
                     <h4 id="date">fasddsfsdfsdf</h4>
                     <hr />
@@ -127,14 +126,23 @@
                     </button>
                 </div>
                 <div id="modifyModel" class="modal-body">
-                    <br/><span class="badge badge-primary">文章标题</span><br/><br/>
+                    <br />
+                    <span class="badge badge-primary">文章标题</span><br />
+                    <br />
                     <input class="form-control" type="text" id="ed_title" value="标题" />
-                    <br/><span class="badge badge-primary">日期</span><br/><br/>
+                    <br />
+                    <span class="badge badge-primary">日期</span><br />
+                    <br />
                     <input class="form-control" type="text" id="ed_date" value="标题" />
-                    <br/><span class="badge badge-primary">发布者</span><br/><br/>
+                    <br />
+                    <span class="badge badge-primary">发布者</span><br />
+                    <br />
                     <input class="form-control" type="text" id="ed_publisher" value="标题" />
-                    <br/><span class="badge badge-primary">内容</span><br/><br/>
-                    <input class="form-control" type="text" id="ed_content" value="标题" />
+                    <br />
+                    <span class="badge badge-primary">内容</span><br />
+                    <br />
+                    <textarea id="ed_content" class="form-control" name="content" style="width: 100%; height: 200px; display: block;"></textarea>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
@@ -143,7 +151,7 @@
             </div>
         </div>
     </div>
-     <!--
+    <!--
         新建模态框
         -->
     <div class="modal fade" id="appendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -156,7 +164,7 @@
                     </button>
                 </div>
                 <div id="appendModel" class="modal-body">
-                    
+
                     <br />
                     <span class="badge badge-primary">文章标题</span><br />
                     <br />
@@ -173,7 +181,7 @@
 
                     <div id="menuselect">
                     </div>
-                        
+
                     <br />
                     <span class="badge badge-primary">发布者</span><br />
                     <br />
@@ -182,7 +190,8 @@
                     <br />
                     <span class="badge badge-primary">内容</span><br />
                     <br />
-                    <input class="form-control" type="text" id="add_content" placeholder="输入内容" />
+                    <textarea id="add_content" class="form-control" name="content" style="width: 100%; height: 200px; display: block;">KindEditor</textarea>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
@@ -193,9 +202,7 @@
     </div>
 
     
-    <div>
-        <asp:TextBox id="TextBox1" name="content" TextMode="MultiLine" runat="server"></asp:TextBox>
-    </div>
+       
     
 
     <script>
@@ -317,7 +324,7 @@
         function Submit() {
 
             var title = $("#ed_title").val();
-            var content = $("#ed_content").val();
+            var content = editor.html();
             var date = $("#ed_date").val();
             var publisher = $("#ed_publisher").val();
 
@@ -456,7 +463,7 @@
 
                     //alert(artobject["title"])
                     $("#title").text(artobject["title"]);
-                    $("#content").html(artobject["articalcontent"]);
+                    editor.html(artobject["articalcontent"]);
                     $("#date").text(artobject["date"]);
                     $("#publisher").text(artobject["publisher"]);
 
@@ -498,7 +505,8 @@
 
                     //alert(artobject["title"])
                     $("#ed_title").val(artobject["title"]);
-                    $("#ed_content").val(artobject["articalcontent"]);
+                    //$("#ed_content").html("fsfsdfds");
+                    editor.html(artobject["articalcontent"])
                     $("#ed_date").val(artobject["date"]);
                     $("#ed_publisher").val(artobject["publisher"]);
 
@@ -514,56 +522,29 @@
 
     </script>
 
-
-
     
-    <script src="../assests/kindeditor/lang/zh-CN.js"></script>
-    <script src="../assests/kindeditor/kindeditor-all.js"></script>
-    <script src="../assests/kindeditor/plugins/code/prettify.js"></script>
-    <script type="text/javascript">
-        KindEditor.ready(function (K) {
-            var editor = K.create('#content', {
-                //上传管理
-                uploadJson: 'kindeditor/asp.net/upload_json.ashx',
-                //文件管理
-                fileManagerJson: 'kindeditor/asp.net/file_manager_json.ashx',
+    <script src="..\assests\kindeditor\kindeditor-all.js"></script>
+    <script src="..\assests\kindeditor\lang/zh-CN.js"></script>
+    <script src="..\assests\kindeditor\plugins\code\prettify.js"></script>
 
-                allowFileManager: true,
-                //设置编辑器创建后执行的回调函数
-                afterCreate: function () {
-                    var self = this;
-                    K.ctrl(document, 13, function () {
-                        self.sync();
-                        K('form[name=example]')[0].submit();
-                    });
-                    K.ctrl(self.edit.doc, 13, function () {
-                        self.sync();
-                        K('form[name=example]')[0].submit();
-                    });
-                },
-                //上传文件后执行的回调函数,获取上传图片的路径
-                afterUpload: function (url) {
-                    alert(url);
-                },
-                //编辑器高度
-                width: '700px',
-                //编辑器宽度
-                height: '450px;',
-                //配置编辑器的工具栏
-                items: [
-                    'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
-                    'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
-                    'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-                    'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
-                    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-                    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
-                    'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
-                    'anchor', 'link', 'unlink', '|', 'about'
-                ]
+        <script>
+        //简单模式初始化
+        var editor;
+        KindEditor.ready(function(K) {
+            editor = K.create('textarea[name="content"]', {
+                resizeType : 1,
+                allowPreviewEmoticons : false,
+                allowImageUpload : false,
+                items : [
+                    'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                    'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                    'insertunorderedlist', '|', 'emoticons', 'image', 'link']
             });
-            prettyPrint();
         });
     </script>
+
+    
+    
 </asp:Content>
 
 

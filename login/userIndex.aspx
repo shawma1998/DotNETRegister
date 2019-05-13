@@ -55,11 +55,8 @@
         <div class="row">
             <div class="span2">
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="#">功能真的还没开发</a></li>
-                    <li><a href="#">功能真的还没开发</a></li>
-                    <li><a href="#">功能真的还没开发</a></li>
-                    <li><a href="#">功能真的还没开发</a></li>
-                    <li><a href="userInfo.aspx">个人信息</a></li>
+                    <li><a href="userInfo.aspx">用户信息</a></li>
+                    <li><a href="userArtical.aspx">查看公告</a></li>
                 </ul>
             </div>
         </div>

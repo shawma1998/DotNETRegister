@@ -216,6 +216,7 @@ public partial class ManagerPages_managerArt : System.Web.UI.Page
         _menu = sb.ToString();
 
     }
+
     private string GetSubMenu(string pid, DataTable dt)
     {
         StringBuilder sb = new StringBuilder();
