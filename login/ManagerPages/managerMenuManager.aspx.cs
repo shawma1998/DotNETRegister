@@ -27,7 +27,7 @@ public partial class ManagerPages_managerAddArtical : System.Web.UI.Page
         }
         
     }
-
+    
     public void ListMenu()
     {
         StringBuilder sb = new StringBuilder();
@@ -53,8 +53,9 @@ public partial class ManagerPages_managerAddArtical : System.Web.UI.Page
             sb.AppendFormat(
                 "<li class=\"list-group-item\" ID=\"{0}\">" +
                 "<a href=article1.aspx?id={0}>{1}</a>" +
-                "<Button type=\"button\" class=\"btn_added btn btn-primary\" onclick=\"Modify({0})\" data-toggle=\"modal\" data-target=\"#exampleModal\" >新增</Button>" +
-                "<Button type=\"button\" class=\"btn btn-danger \" onclick=\"DeleteMenu({0})\"  >删除</Button>" +
+                "<Button type=\"button\" class=\"btn_added btn btn-success\" onclick=\"Modify({0})\" data-toggle=\"modal\" data-target=\"#exampleModal\" >新增</Button>" +
+                "<Button type=\"button\" class=\"btn btn-primary \" onclick=\"ModifyMenu({0})\" data-toggle=\"modal\" data-target=\"#ModifyModal\" >修改</Button>" +
+                "<Button type =\"button\" class=\"btn_added btn btn-danger \" onclick=\"DeleteMenu({0})\">删除</Button>" +
                 "\r\n", id, title);//href可以写需要的链接地址
             sb.Append(GetSubMenu(id, _list));
             sb.Append("</li>\r\n");
@@ -71,13 +72,14 @@ public partial class ManagerPages_managerAddArtical : System.Web.UI.Page
         sb.Append("<ul class=\"list -group\">\r\n");
         foreach (DataRow dr in rows)
         {
-            string id = dr["ID"].ToString();
+            string id = dr["ID"].ToString(); 
             string name = dr["title"].ToString();
             sb.AppendFormat(
                 "<li class=\"list-group-item\" ID=\"{0}\">" +
                 "<a href=article1.aspx?id={0}>{1}</a>" +
-                "<Button type=\"button\" class=\"btn btn-primary btn_added\" onclick=\"Modify({0})\" data-toggle=\"modal\" data-target=\"#exampleModal\" >新增</Button>" +
-                "<Button class=\"btn btn-danger \" onclick=\"DeleteMenu({0})\"  >删除</Button>" +
+                "<Button type=\"button\" class=\"btn_added btn btn-primary btn_added\" onclick=\"Modify({0})\" data-toggle=\"modal\" data-target=\"#exampleModal\" >新增</Button>" +
+                "<Button type=\"button\" class=\"btn btn-primary \" onclick=\"ModifyMenu({0})\" data-toggle=\"modal\" data-target=\"#ModifyModal\" >修改</Button>" +
+                "<Button type=\"button\" class=\"btn_added btn btn-danger \" onclick=\"DeleteMenu({0})\"  >删除</Button>" +
                 "\r\n", id, name);//href可以写需要的链接地址
             sb.Append(GetSubMenu(id, dt));  //递归
             sb.Append("</li>\r\n");
@@ -94,6 +96,25 @@ public partial class ManagerPages_managerAddArtical : System.Web.UI.Page
         int result = DataBaseTools.AddTitle(title, pid);
         return result;
 
+    }
+
+    [WebMethod]
+    public static int UpdateMenuCS(string id, string menuTitle ) {
+        string ConctionStr = ConfigurationManager.ConnectionStrings["ShowmarkNETConnectionString"].ToString();
+        using (SqlConnection con = new SqlConnection(ConctionStr))
+        {
+            con.Open();
+            //select* from student limit 2,8;
+
+            //SELECT * FROM artical  WHERE visable = 1 AND MID = 1 ORDER BY id OFFSET 3 ROWS FETCH NEXT 1 ROWS ONLY
+            string sql = "UPDATE MenuList SET title = '"+ menuTitle + "' WHERE id = '" + id+"'";
+            SqlCommand Com = new SqlCommand(sql, con);
+            int result = Com.ExecuteNonQuery();
+
+            Com.Dispose();
+            con.Close();
+            return result;
+        }
     }
 
     [WebMethod]

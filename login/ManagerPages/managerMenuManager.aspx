@@ -57,10 +57,40 @@
 
 
     
+    <!-- 弹框输入__修改 -->
+    <div class="modal fade" id="ModifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Modifytitle">修改节点名</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="ModifyFrom2" class="col-sm-12 ">
+                        
+                        <br />
+                        <br />
+                        <div class="input-group col-sm-12">
+                           <input id="modify_input" type="text" class="form-control" />
+                        </div>
+                        <br />
+                        <br />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" id="uodateMenu" type="button" data-dismiss="modal" onclick="UpdateMenu()">修改节点</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         var pid;
-
+        var menuid;
         $("#addMenu").click(function () {
 
             console.log($("#title_add"))
@@ -70,6 +100,9 @@
 
             //alert(title);
             if (title != null) {
+
+               
+
                 $.ajax({
                     type: "Post",
                     url: "managerMenuManager.aspx/SetTempPid",
@@ -97,6 +130,44 @@
         });
 
 
+        function ModifyMenu(id) {
+            menuid = id;
+            //alert(menuid);
+        }
+
+
+        function UpdateMenu() {
+            //alert("dddd")
+            var newMenuTitle = $("#modify_input").val();
+            //alert(newMenuTitle)
+            //alert(menuid)
+            if (menuid != 0) {
+                //alert(menuid)
+                //alert(menuid)
+                $.ajax({
+                    type: "Post",
+                    url: "managerMenuManager.aspx/UpdateMenuCS",
+                    data: "{'id':'" + menuid + "','menuTitle':'"+newMenuTitle+"'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        //返回的数据用data.d获取内容   
+                        console.log(data.d);
+                        if (data.d != 0) {
+                            alert("更新成功");
+                            location.reload();
+                        } else {
+                            alert("更新节点失败");
+                            location.reload();
+                        }
+                    },
+                    error: function (err) {
+                        alert("cuole");
+                    }
+                });
+
+            }
+        }
 
 
         function Modify(param1) {

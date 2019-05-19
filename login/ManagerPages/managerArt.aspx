@@ -103,7 +103,7 @@
                     <hr />
 
                     <span class="badge badge-primary">具体内容</span>
-                    <h4 id="content">fasddsfsdfsdf</h4>
+                    <h4 id="content_preview"><b>dsdsadsad</b></h4>
                     <hr />
                 </div>
                 <div class="modal-footer">
@@ -463,7 +463,7 @@
 
                     //alert(artobject["title"])
                     $("#title").text(artobject["title"]);
-                    editor.html(artobject["articalcontent"]);
+                    $("#content_preview").html(artobject["articalcontent"]);
                     $("#date").text(artobject["date"]);
                     $("#publisher").text(artobject["publisher"]);
 
@@ -507,6 +507,7 @@
                     $("#ed_title").val(artobject["title"]);
                     //$("#ed_content").html("fsfsdfds");
                     editor.html(artobject["articalcontent"])
+                    console.log($("#content_preview"))
                     $("#ed_date").val(artobject["date"]);
                     $("#ed_publisher").val(artobject["publisher"]);
 
