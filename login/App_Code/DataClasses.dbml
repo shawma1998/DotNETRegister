@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ShowmarkNET" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=shawma;Initial Catalog=ShowmarkNET;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ShowmarkNETConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Class" Member="Class">
+    <Type Name="Class">
+      <Column Name="class_no" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="class_name" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="Class_pingjia" Member="pingjia" ThisKey="class_no" OtherKey="class_no" Type="pingjia" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Kc" Member="Kc">
+    <Type Name="Kc">
+      <Column Name="kc_no" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="kc_name" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Kc_pingjia" Member="pingjia" ThisKey="kc_no" OtherKey="kc_no" Type="pingjia" />
+    </Type>
+  </Table>
+  <Table Name="dbo.pingjia" Member="pingjia">
+    <Type Name="pingjia">
+      <Column Name="pj_no" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="kc_no" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="th_no" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="class_no" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ter_no" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="fuser" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Class_pingjia" Member="Class" ThisKey="class_no" OtherKey="class_no" Type="Class" IsForeignKey="true" />
+      <Association Name="Kc_pingjia" Member="Kc" ThisKey="kc_no" OtherKey="kc_no" Type="Kc" IsForeignKey="true" />
+      <Association Name="Teacher_pingjia" Member="Teacher" ThisKey="th_no" OtherKey="th_no" Type="Teacher" IsForeignKey="true" />
+      <Association Name="Term_pingjia" Member="Term" ThisKey="ter_no" OtherKey="ter_no" Type="Term" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Teacher" Member="Teacher">
+    <Type Name="Teacher">
+      <Column Name="th_no" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="th_name" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Association Name="Teacher_pingjia" Member="pingjia" ThisKey="th_no" OtherKey="th_no" Type="pingjia" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Term" Member="Term">
+    <Type Name="Term">
+      <Column Name="ter_no" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ter_info" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Term_pingjia" Member="pingjia" ThisKey="ter_no" OtherKey="ter_no" Type="pingjia" />
+    </Type>
+  </Table>
+</Database>

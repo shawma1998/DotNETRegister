@@ -338,8 +338,9 @@
                 success: function (data) {
                     //返回的数据用data.d获取内容   
                     //alert(data.d)
-                    //alert("OK");
-                    //alert(artobject["title"])
+
+
+                    //alert("OK");modifyModal                    //alert(artobject["title"])
                     if (data.d != 0) {
                         //alert("更新成功");
                         $('#modifyModal').modal('toggle')

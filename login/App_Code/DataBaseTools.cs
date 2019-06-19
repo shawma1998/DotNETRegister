@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ public static class DataBaseTools
 {
 
     //后期需要写入连接字符串
-    public static readonly string connectionString = "Data Source=DESKTOP-KR8A64M;Initial Catalog=ShowmarkNET;User ID=sa;Password=123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+    public static readonly string connectionString = "Data Source=shawma;Initial Catalog=ShowmarkNET;User ID=sa;Password=123456";
 
 
 
@@ -175,7 +176,7 @@ public static class DataBaseTools
 
     public static void SubmitData(Dictionary<String, String> userInfo)
     {
-        string tempsex;
+        //string tempsex;
 
 
         SqlConnection sqlConnection = new SqlConnection(connectionString);
@@ -230,4 +231,36 @@ public static class DataBaseTools
         sqlConnection.Close();
         return true;
     }
+
+
+    /// <summary>
+    /// 获取sql链接
+    /// </summary>
+    /// <returns></returns>
+    public static SqlConnection GetSqlConnection()
+    {
+        SqlConnection sqlConnection = new SqlConnection(connectionString);
+        return sqlConnection;
+    }
+
+    /// <summary>
+    /// 通过传入查询语句返回对应内容的list
+    /// </summary>
+    /// <param name="sql"></param>
+    /// <returns></returns>
+    public static DataTable GetDataBySqlString(string sql)
+    {
+
+        SqlConnection sqlConnection = GetSqlConnection();
+        sqlConnection.Open();
+        DataTable list = new DataTable();
+        SqlCommand Com = new SqlCommand(sql, sqlConnection);
+        SqlDataAdapter Adaper = new SqlDataAdapter(Com);
+        Adaper.Fill(list);
+        Adaper.Dispose();
+        sqlConnection.Close();
+        return list;
+    }
+
+
 }
