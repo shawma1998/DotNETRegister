@@ -24,6 +24,8 @@
     </div>
     <div class="col-sm-9">
 
+        <asp:DropDownList Visible="false" ID="DropDownList1" runat="server" CssClass="form-control" OnSelectedIndexChanged="selectedList1_Changed"></asp:DropDownList>
+
         <asp:GridView ID="GridView1" runat="server" CssClass="table table-striped" BorderStyle="None" BorderWidth="0px" GridLines="None" 
             OnRowEditing="GridView1_RowEditing" 
             OnRowCancelingEdit="GridView1_RowCancelingEdit"
@@ -47,6 +49,40 @@
         </asp:GridView>
 
     </div>
-</asp:Content>
 
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">新增<%=itemString%>数据</button>
+
+
+    <%-- 模态框用来append数据 --%>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Recipient:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" runat="server" class="btn btn-primary">新增</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</asp:Content>
 

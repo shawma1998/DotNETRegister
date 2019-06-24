@@ -12,11 +12,16 @@ using System.Web.UI.WebControls;
 public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
 {
     string item;
+    public static string itemString;
     string orderBy;
 
-    private DataClassesDataContext myContext;
+    public DataClassesDataContext myContext;
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        
+
+        DropDownList1.AutoPostBack = true;
         //使用linq来对数据库来进行操作
         myContext = new DataClassesDataContext();
 
@@ -29,10 +34,51 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
         }
         if (!Page.IsPostBack)
         {
-            BindDataByRequest(item);
+            if (item != null) {
+                BindDataByRequest(item);
+            }
+            if (orderBy != null) {
+                BindDataByRequestOrder(orderBy);
+            }
         }
 
         //TermBean sa = termBeans[1];
+    }
+    
+
+    private void BindDataByRequestOrder(string orderBy)
+    {
+        //下拉框可见
+
+        DropDownList1.Visible = true;
+
+        SqlDataSource sqlDataSource = new SqlDataSource();
+        sqlDataSource.ConnectionString = DataBaseTools.connectionString;
+        sqlDataSource.SelectCommand = "SELECT * FROM pj_final";
+        GridView1.DataSource = sqlDataSource;
+        GridView1.DataBind();
+
+
+
+        //DropDownList1.DataSource = new SqlDataSource(DataBaseTools.connectionString,"SELECT kc_no FROM "+orderBy);
+        //DropDownList1.DataBind();
+        sqlDataSource.Dispose();
+
+        
+
+        //将下拉栏的数据绑定到dropdownlist
+        DataTable dataTable = DataBaseTools.GetDataBySqlString("SELECT * FROM " + orderBy);
+
+        DropDownList1.DataTextField = dataTable.Columns[1].ToString();
+        DropDownList1.DataValueField = dataTable.Columns[0].ToString();
+
+        DropDownList1.DataSource = dataTable.DefaultView;
+
+        DropDownList1.DataBind();
+        DropDownList1.Items.Insert(0, new ListItem("-----选择选项-----", ""));
+
+
+
     }
 
     private void BindDataByRequest(string item)
@@ -41,15 +87,19 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
         {
             case "Term":
                 BindData<TermBean>();
+                itemString = "学期";
                 break;
             case "kc":
                 BindData<KcBeam>();
+                itemString = "课程";
                 break;
             case "Teacher":
                 BindData<TeacherBean>();
+                itemString = "教师";
                 break;
             case "Class":
                 BindData<ClassBean>();
+                itemString = "班级";
                 break;
             case "pingjia":
                 BindData<PingjiaBean>();
@@ -77,8 +127,19 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
 
     protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
     {
-        GridView1.EditIndex = e.NewEditIndex;
-        BindDataByRequest(item);
+        if (orderBy == null)
+        {
+            Response.Write("<script>alert('111')</script>");
+            GridView1.EditIndex = e.NewEditIndex;
+            BindDataByRequest(item);
+
+        }
+        else
+        {
+            //Response.Write("<script>alert('ddd')</script>");
+            GridView1.EditIndex = -1;
+            GridView1.Enabled = false;
+        }
 
     }
 
@@ -92,17 +153,21 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
 
     protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
+        
 
-
-        try
+        if (orderBy == null)
         {
-            UpdateGridview(e,item);
-            Response.Write("<script>alert('更新成功')</script>");
+            try
+            {
+                LinqUtils.UpdateGridview(myContext, e, item);
+                Response.Write("<script>alert('更新成功')</script>");
 
-            GridView1.SetEditRow(-1);
-        }
-        catch (Exception _e) {
-            Response.Write("<script>alert('更新失败')</script>");
+                GridView1.SetEditRow(-1);
+            }
+            catch (Exception _e)
+            {
+                Response.Write("<script>alert('更新失败')</script>");
+            }
         }
 
 
@@ -112,6 +177,8 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
 
     protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
+        LinqUtils.DeleteGridview(myContext, e, item);
+        myContext.SubmitChanges();
 
         BindDataByRequest(item);
 
@@ -139,77 +206,35 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
 
     //修改内容的代码
 
-    private void UpdateGridview(GridViewUpdateEventArgs e,string item)
+
+
+
+    protected void selectedList1_Changed(object sender, EventArgs e)
     {
-
-        string id = (string)e.NewValues[0];
-        string info = (string)e.NewValues[1];
-
-        //修改数据 id无法修改
-
-        switch (item) {
+        DataTable resultTable = null;
+        string selectedValue = DropDownList1.SelectedItem.Text;
+        //根据地址的ordertype来判断那个字段的搜索
+        switch (orderBy) {
+            //从pj_final来搜寻
             case "Term":
-                var _q1 = myContext.Term.Where(p => p.ter_no == System.Convert.ToInt32(id));
-
-                if (_q1.Count() > 0)
-                {
-                    Term term = _q1.First();
-                    //改
-                    term.ter_info = info;
-                }
+                resultTable = DataBaseTools.GetOrderTypeItem("ter_info", selectedValue);
                 break;
-
             case "kc":
-                var _q2 = myContext.Kc.Where(p => p.kc_no == System.Convert.ToInt32(id));
-
-                if (_q2.Count() > 0)
-                {
-                    Kc kc = _q2.First();
-                    //改
-                    kc.kc_name = info;
-                }
+                resultTable = DataBaseTools.GetOrderTypeItem("kc_name", selectedValue);
                 break;
-
-
             case "Teacher":
-                var _q3 = myContext.Teacher.Where(p => p.th_no == System.Convert.ToInt32(id));
-
-                if (_q3.Count() > 0)
-                {
-                    Teacher teacher = _q3.First();
-                    //改
-                    teacher.th_name = info;
-                }
+                resultTable = DataBaseTools.GetOrderTypeItem("th_name", selectedValue);
                 break;
-
             case "Class":
-                var _q4 = myContext.Class.Where(p => p.class_no == System.Convert.ToInt32(id));
-
-                if (_q4.Count() > 0)
-                {
-                    Class _class = _q4.First();
-                    //改
-                    _class.class_name = info;
-                }
+                resultTable = DataBaseTools.GetOrderTypeItem("class_name", selectedValue);
                 break;
-
         }
 
-        //这段需要重复写qwq
-        /*
-        var q = myContext.Term.Where(p => p.ter_no == System.Convert.ToInt32(id));
+        //string a=  resultTable.Columns[0].ToString();
 
-        if (q.Count() > 0)
-        {
-            Term term = q.First();
-            //改
-            term.ter_info = info;
-        }
-        */
-        myContext.SubmitChanges();
+        GridView1.DataSource = resultTable;
+        GridView1.DataBind();
 
-
-        //修改数据
-        BindDataByRequest(item);
+        
     }
 }

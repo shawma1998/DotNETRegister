@@ -263,4 +263,17 @@ public static class DataBaseTools
     }
 
 
+    public static DataTable GetOrderTypeItem(string KeyProperty, string SearchKey) {
+        SqlConnection sqlConnection = GetSqlConnection();
+        sqlConnection.Open();
+        DataTable list = new DataTable();
+        string sql = "SELECT * FROM pj_final WHERE " + KeyProperty + " = '" + SearchKey+"'";
+        SqlCommand Com = new SqlCommand(sql, sqlConnection);
+        SqlDataAdapter Adaper = new SqlDataAdapter(Com);
+        Adaper.Fill(list);
+        Adaper.Dispose();
+        sqlConnection.Close();
+        return list;
+    }
+
 }
