@@ -67,22 +67,44 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Recipient:</label>
+                        <label for="recipient-name" class="col-form-label">新增<%=itemString %>内容:</label>
                         <input type="text" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" runat="server" class="btn btn-primary">新增</button>
+                    <button id="addbtn" type="button" runat="server" class="btn btn-primary" onclick="AppendItems()">新增</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+
+        
+        function AppendItems() {
+            var addpendName= $("#recipient-name").val()
+            //alert("dddd")
+            $.ajax({
+                type: "Post",
+                url: "managerEvaluate.aspx/AddData",
+                //方法传参的写法一定要对，str为形参的名字,str2为第二个形参的名字   
+                data: "{'name':'"+addpendName+"'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    alert("插入成功")
+                    $('#exampleModal').modal('toggle')
+                    location.reload();
+                        
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+        }
+
+    </script>
 
 </asp:Content>
 

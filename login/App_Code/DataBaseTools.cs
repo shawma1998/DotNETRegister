@@ -275,5 +275,17 @@ public static class DataBaseTools
         sqlConnection.Close();
         return list;
     }
+    public static void AddItem(string tableName, string value)
+    {
+        SqlConnection sqlConnection = GetSqlConnection();
+        sqlConnection.Open();
+        DataTable list = new DataTable();
+        string sql = "INSERT INTO "+ tableName + " VALUES('"+value+"')";
+        SqlCommand Com = new SqlCommand(sql, sqlConnection);
+        SqlDataAdapter Adaper = new SqlDataAdapter(Com);
+        Adaper.Fill(list);
+        Adaper.Dispose();
+        sqlConnection.Close();
+    }
 
 }

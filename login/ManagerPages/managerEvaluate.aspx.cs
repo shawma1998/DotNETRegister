@@ -6,12 +6,13 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
 {
-    string item;
+    public static string item;
     public static string itemString;
     string orderBy;
 
@@ -19,8 +20,9 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        
 
+
+        addbtn.Visible = true;
         DropDownList1.AutoPostBack = true;
         //使用linq来对数据库来进行操作
         myContext = new DataClassesDataContext();
@@ -236,5 +238,29 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
         GridView1.DataBind();
 
         
+    }
+
+    [WebMethod]
+    public static void AddData(string name) {
+        switch (item)
+        {
+            case "Term":
+                DataBaseTools.AddItem("Term", name);
+                break;
+            case "kc":
+                DataBaseTools.AddItem("kc", name);
+                break;
+            case "Teacher":
+                DataBaseTools.AddItem("Teacher", name);
+                break;
+            case "Class":
+                DataBaseTools.AddItem("Class", name);
+
+                break;
+            case "pingjia":
+                //qitacaozuo- -
+                break;
+
+        }
     }
 }
