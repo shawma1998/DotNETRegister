@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.UI.WebControls;
 
 /// <summary>
 /// Class1 的摘要说明
@@ -287,5 +288,32 @@ public static class DataBaseTools
         Adaper.Dispose();
         sqlConnection.Close();
     }
+
+    public static void BindDataToDropDown(DropDownList dropDownList, string TableName) {
+
+        DataTable dataTable = null;
+        dataTable = DataBaseTools.GetDataBySqlString("SELECT * FROM "+TableName);
+        dropDownList.DataTextField = dataTable.Columns[1].ToString();
+        dropDownList.DataValueField = dataTable.Columns[0].ToString();
+
+        dropDownList.DataSource = dataTable.DefaultView;
+        dropDownList.DataBind();
+        dropDownList.Items.Insert(0, new ListItem("-----选择选项-----", ""));
+
+        //sqlDataSource.Dispose();
+    }
+
+
+    public static void CommandSqlNoReturn(string sql)
+    {
+        SqlConnection sqlConnection = GetSqlConnection();
+        sqlConnection.Open();
+        SqlCommand Com = new SqlCommand(sql, sqlConnection);
+        Com.ExecuteNonQuery();
+        Com.Dispose();
+        sqlConnection.Dispose();
+    }
+
+   
 
 }

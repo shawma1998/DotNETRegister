@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Services;
 using System.Web.UI;
@@ -20,39 +21,60 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
-
         addbtn.Visible = true;
-        DropDownList1.AutoPostBack = true;
         //使用linq来对数据库来进行操作
         myContext = new DataClassesDataContext();
 
         //获得当前地址栏传入的参数，然后获得要点击的栏目
         item = Request.QueryString["item"];
         orderBy = Request.QueryString["orderBy"];
+        
         if (item == null&& orderBy==null)
         {
             item = "Term";
         }
         if (!Page.IsPostBack)
         {
+            
+            //DropDownList1.AutoPostBack = true;
             if (item != null) {
                 BindDataByRequest(item);
             }
-            if (orderBy != null) {
+            if (orderBy != null)
+            {
+                BindDataInDropDownLists();
+                add_pj_btn.Visible = false;
                 BindDataByRequestOrder(orderBy);
+
             }
         }
+        
 
         //TermBean sa = termBeans[1];
     }
-    
+
+
+    //新增评价记录的下拉框增加数据
+    //将增加记录的下拉框
+    private void BindDataInDropDownLists()
+    {
+        //填充学期下拉框
+        DataBaseTools.BindDataToDropDown(term_dropdownlist, "Term");
+        //填充Class下拉框
+        DataBaseTools.BindDataToDropDown(class_dropdownlist, "Class");
+        //填充Teacher下拉框
+        DataBaseTools.BindDataToDropDown(teacher_dropdownlist, "Teacher");
+        //填充kc下拉框
+        DataBaseTools.BindDataToDropDown(kc_dropdownlist, "kc");
+
+    }
 
     private void BindDataByRequestOrder(string orderBy)
     {
         //下拉框可见
 
-        DropDownList1.Visible = true;
+        add_pj_btn.Visible = false;
+        //DropDownList1.Visible = true;
 
         SqlDataSource sqlDataSource = new SqlDataSource();
         sqlDataSource.ConnectionString = DataBaseTools.connectionString;
@@ -104,7 +126,14 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
                 itemString = "班级";
                 break;
             case "pingjia":
-                BindData<PingjiaBean>();
+                add_items_btn.Visible = true;
+                add_pj_btn.Visible = false;
+                //sql liang jik zi hu chuang
+                string sql = "SELECT class_name,kc_name,th_name,ter_info,fuser FROM pingjia,Class,Kc,Term,Teacher WHERE Class.class_no = pingjia.class_no AND Kc.kc_no = pingjia.kc_no AND Teacher.th_no = pingjia.th_no AND Term.ter_no = pingjia.ter_no ";
+                //展示数据
+                DataTable dataTable = DataBaseTools.GetDataBySqlString(sql);
+                GridView1.DataSource = dataTable;
+                GridView1.DataBind();
                 break;
 
         }
@@ -213,30 +242,6 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
 
     protected void selectedList1_Changed(object sender, EventArgs e)
     {
-        DataTable resultTable = null;
-        string selectedValue = DropDownList1.SelectedItem.Text;
-        //根据地址的ordertype来判断那个字段的搜索
-        switch (orderBy) {
-            //从pj_final来搜寻
-            case "Term":
-                resultTable = DataBaseTools.GetOrderTypeItem("ter_info", selectedValue);
-                break;
-            case "kc":
-                resultTable = DataBaseTools.GetOrderTypeItem("kc_name", selectedValue);
-                break;
-            case "Teacher":
-                resultTable = DataBaseTools.GetOrderTypeItem("th_name", selectedValue);
-                break;
-            case "Class":
-                resultTable = DataBaseTools.GetOrderTypeItem("class_name", selectedValue);
-                break;
-        }
-
-        //string a=  resultTable.Columns[0].ToString();
-
-        GridView1.DataSource = resultTable;
-        GridView1.DataBind();
-
         
     }
 
@@ -262,5 +267,44 @@ public partial class ManagerPages_EvaluateManager : System.Web.UI.Page
                 break;
 
         }
+    }
+
+
+    [WebMethod]
+    public static void AddPjproject(string term_no,string class_no,string kc_no,string teacher_no)
+    {
+
+        string appendsql = "INSERT INTO pingjia VALUES ('"+ kc_no + "', '"+ teacher_no + "', '"+ class_no + "', '"+ term_no + "','')";
+
+        DataBaseTools.CommandSqlNoReturn(appendsql);
+
+    }
+
+    protected void Search_Onclick(object sender, EventArgs e)
+    {
+        DataTable resultTable = null;
+        string selectedValue = DropDownList1.SelectedItem.Text;
+        //根据地址的ordertype来判断那个字段的搜索
+        switch (orderBy)
+        {
+            //从pj_final来搜寻
+            case "Term":
+                resultTable = DataBaseTools.GetOrderTypeItem("ter_info", selectedValue);
+                break;
+            case "kc":
+                resultTable = DataBaseTools.GetOrderTypeItem("kc_name", selectedValue);
+                break;
+            case "Teacher":
+                resultTable = DataBaseTools.GetOrderTypeItem("th_name", selectedValue);
+                break;
+            case "Class":
+                resultTable = DataBaseTools.GetOrderTypeItem("class_name", selectedValue);
+                break;
+        }
+
+        //string a=  resultTable.Columns[0].ToString();
+        GridView1.DataSource = null;
+        GridView1.DataSource = resultTable;
+        GridView1.DataBind();
     }
 }

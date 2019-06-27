@@ -57,6 +57,7 @@
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="userInfo.aspx">用户信息</a></li>
                     <li><a href="userArtical.aspx">查看公告</a></li>
+                    <li><a href="userEvaluation.aspx">查看公告</a></li>
                 </ul>
             </div>
         </div>

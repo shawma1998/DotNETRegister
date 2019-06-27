@@ -58,6 +58,7 @@
                     <li><a href="managerUpLoad.aspx">批量注册</a></li>
                     <li><a href="managerMenuManager.aspx">分类管理</a></li>
                     <li><a href="managerArt.aspx">文章管理</a></li>
+                    <li><a href="managerEvaluate.aspx">评价管理</a></li>
                 </ul>
             </div>
         </div>
